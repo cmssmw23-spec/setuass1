@@ -28,8 +28,8 @@ def time_validation(days):
 time_ok=time_validation(days)
 
 def budgetandtime_validation(budget,time_ok,local,age_ok):
-    if budget < 1000.00 and local == "abroad" and age_ok is True:
-        print("You do not have sufficient funds for a holiday abroad.We will attempt to find a local holiday destination based on your preferences.")
+    if (budget < 1000.00 or time_ok is False) and local == "abroad" and age_ok is True :
+        print("You do not have sufficient funds or time for a holiday abroad.We will attempt to find a local holiday destination based on your preferences.")
         return False
 
     elif budget >= 1000.00 and time_ok is False and local == "abroad" and age_ok is True:
