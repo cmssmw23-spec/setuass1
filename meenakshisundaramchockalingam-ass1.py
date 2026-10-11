@@ -8,14 +8,9 @@ age=int(input("Please enter your age: "))
 
 def age_validation(age):
     if age < 18:
-        print("Sorry, you are not old enough to go on holiday alone.")
         return False
     else:
-        print("You are old enough to go on holiday.We will proceed with further questions.")
         return True
-
-age_validation(age)
-
 
 budget=float(input("Please enter your budget in EUR: "))
 weather=str((input("What type of weather do you prefer for your holiday?sunny or cold: ")).lower())
@@ -30,33 +25,32 @@ def time_validation(days):
     else:
         return True
 
-time_validation(days)
+time_ok=time_validation(days)
 
-
-
-def budgetandtime_validation(budget,time_validation):
-    if budget < 1000.00 :
+def budgetandtime_validation(budget,time_ok,local,age_ok):
+    if budget < 1000.00 and local == "abroad" and age_ok is True:
         print("You do not have sufficient funds for a holiday abroad.We will attempt to find a local holiday destination based on your preferences.")
         return False
 
-    elif budget >1000.00 and time_validation is False:
+    elif budget >1000.00 and time_ok is False and local == "abroad" and age_ok is True:
         print("You have sufficient funds for a holiday abroad but you do not have enough time to go on holiday abroad.We will attempt to find a local holiday destination based on your preferences.")
-        return True
-    else: 
-        print("You have sufficient budget for a local or abroad holiday destination.We will attempt to find a holiday destination based on your preferences.")
+        return False
+   
+    else:
+        if age_ok is True:
+         print("You have sufficient budget for a local or abroad holiday destination.We will attempt to find a holiday destination based on your preferences.")
         return True
 
-budgetandtime_validation(budget, time_validation(days))
 
 age_ok=age_validation(age)
-budget_ok=budgetandtime_validation(budget, time_validation(days))
+budget_ok=budgetandtime_validation(budget, time_ok, local, age_ok)
 
 
 
 def holiday_recommendation(weather,location,local,age_ok,budget_ok):
     
     
-    if age_ok is True and budget_ok is True:
+    if age_ok is True and budget_ok is True and local == "abroad":
 
         if weather == "sunny" and location == "beaches":
             recommendation= "Based on your preferences, we recommend you to go to the Canary Islands for a leisurely beach holiday."
@@ -70,11 +64,11 @@ def holiday_recommendation(weather,location,local,age_ok,budget_ok):
         elif weather == "cold" and location == "mountains":
             recommendation= "Based on your preferences, we recommend you to go to the Austrian Alpsfor a winter mountain holiday."
             return recommendation
-        #else:
-            #recommendation= "Based on your preferences, we are unable to provide a recommendation at this time"
-            #return recommendation   
+        else:
+            recommendation= "Based on your preferences, we are unable to provide a recommendation at this time"
+            return recommendation   
 
-    elif age_ok is True and budget_ok is False:
+    elif age_ok is True and (budget_ok is False or local == "local"):
         if weather == "sunny" and location == "beaches":
             recommendation= "Based on your preferences, we recommend you to go to Kilkee for a leisurely beach holiday."
             return recommendation
@@ -87,13 +81,20 @@ def holiday_recommendation(weather,location,local,age_ok,budget_ok):
         elif weather == "cold" and location == "mountains":
             recommendation= "Based on your preferences, we recommend you to go to the mountains in Switzerland for a winter mountain holiday."
             return recommendation
-        #else:
+        else:
         
-          #recommendation= "Based on your preferences, we are unable to provide a recommendation at this time"
-          #return recommendation
+            recommendation= "Based on your preferences, we are unable to provide a recommendation at this time"
+            return recommendation
     else:
         recommendation= "Based on your preferences, we are unable to provide a recommendation at this time due to your selected preferences"
         return recommendation
 
-print(holiday_recommendation(weather,location,local,age_ok,budget_ok))
 
+print(21*"-")
+print(f"Thank you {name} for using the Where Do I go on Holiday Planner!")
+print(holiday_recommendation(weather,location,local,age_ok,budget_ok))
+if age_ok is False:
+    print("You are not old enough to go on holiday alone. Please request a parent or guardian to accompany you on your holiday.")
+else:
+    print("We hope you have a great holiday!")
+print(21*"-")
