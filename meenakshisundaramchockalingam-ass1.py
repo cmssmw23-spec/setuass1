@@ -79,7 +79,7 @@ def holiday_recommendation(weather,location,local,age_ok,budget_ok):
             recommendation= "Based on your preferences, we recommend you to explore the beaches of County Donegal for a cold beach holiday."
             return recommendation
         elif weather == "cold" and location == "mountains":
-            recommendation= "Based on your preferences, we recommend you to go to the mountains in Switzerland for a winter mountain holiday."
+            recommendation= "Based on your preferences, we recommend you to go to the mountains of County Kerry for a winter mountain holiday."
             return recommendation
         else:
         
